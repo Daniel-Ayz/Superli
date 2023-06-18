@@ -8,6 +8,7 @@ import HumanResources.ServiceLayer.ServiceFactory;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import FaceRecognition.FaceRecognition;
 
 public class LoginScreen {
     private JPanel mainPanel;
@@ -16,6 +17,7 @@ public class LoginScreen {
     private JButton loginButton;
     private JRadioButton employeeRadioButton;
     private JRadioButton managerRadioButton;
+    private JButton faceRecognitionButton;
     private ButtonGroup buttonGroup;
 
     public LoginScreen() {
@@ -57,6 +59,26 @@ public class LoginScreen {
                     JOptionPane.showMessageDialog(null, "Invalid username or password.");
                 }
 
+            }
+        });
+
+        // Add listener to face recognition button
+        faceRecognitionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = FaceRecognition.recognizeFaces();
+                if (name.equals("ERROR")) {
+                    JOptionPane.showMessageDialog(null, "Face not recognized.");
+                } else {
+//                    boolean isEmployee = employeeRadioButton.isSelected();
+                    usernameTextField.setText(name);
+                    if (!name.equals("ADMIN")) {
+                        new EmployeeMainScreen(name);
+                    } else {
+                        new ManagerMainScreen();
+                    }
+                    frame.dispose(); // Close the login window
+                }
             }
         });
 
