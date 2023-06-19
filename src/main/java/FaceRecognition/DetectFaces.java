@@ -16,7 +16,7 @@ public class DetectFaces {
 
     public static void detectFaces() throws IOException {
         // TODO(developer): Replace these variables before running the sample.
-        String filePath = "C:\\Users\\mafia\\OneDrive - post.bgu.ac.il\\שולחן העבודה\\personal\\Photos\\DSC_8793.jpg";
+        String filePath = "C:\\Users\\mafia\\OneDrive - post.bgu.ac.il\\שולחן העבודה\\תואר\\סמסטר ד\\ניתוץ\\Superli\\AttendanceProject\\images\\c1.png";
         detectFaces(filePath);
     }
 
