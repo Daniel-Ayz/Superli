@@ -1,18 +1,19 @@
 package HR_Delivery;
 
 import HumanResources.GUI.LoginScreen;
+import HumanResources.GUI.ManagerView.ManagerMainScreen;
 import HumanResources.ServiceLayer.ServiceFactory;
 import delivery.backend.serviceLayer.FactoryService;
-import delivery.graphicFrontend.MenuWindow;
 
 import javax.swing.*;
 
 public class HRDeliveryMainMenu {
     private JButton humanResourcesMenuButton;
     private JPanel mainPanel;
-    private JButton deliveryMenuButton;
+//    private JButton deliveryMenuButton;
     private JButton addBranchButton;
     private JButton initializeWithBaseDataButton;
+    private JButton logoutButton;
 
     public HRDeliveryMainMenu() {
         JFrame frame = new JFrame("Choose Menu");
@@ -27,10 +28,15 @@ public class HRDeliveryMainMenu {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        humanResourcesMenuButton.addActionListener(e -> new LoginScreen());
-        deliveryMenuButton.addActionListener(e -> new MenuWindow());
+        humanResourcesMenuButton.addActionListener(e -> new ManagerMainScreen());
+//        deliveryMenuButton.addActionListener(e -> new MenuWindow());
         addBranchButton.addActionListener(e -> new AddBranchWindow());
         initializeWithBaseDataButton.addActionListener(e -> InitializeWithData());
+        logoutButton.addActionListener(e -> {
+            JOptionPane.showMessageDialog(null, "Logout Button Pressed");
+            new LoginScreen();
+            frame.dispose();
+        });
     }
 
     private void InitializeWithData() {

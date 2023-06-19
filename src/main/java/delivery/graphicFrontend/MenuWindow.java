@@ -1,5 +1,7 @@
 package delivery.graphicFrontend;
 
+import HumanResources.GUI.LoginScreen;
+
 import javax.swing.*;
 
 public class MenuWindow {
@@ -20,11 +22,12 @@ public class MenuWindow {
     private JButton showExpectedTimeButton;
     private JButton reportDistributionDelayButton;
     private JButton showStoresButton;
+    private JButton logoutButton;
 
     public MenuWindow() {
         JFrame frame = new JFrame("Menu Window");
         frame.setContentPane(mainPanel);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
 
         int width = 600;
@@ -50,6 +53,11 @@ public class MenuWindow {
         showOrdersButton.addActionListener(e -> new OrderVisionWindow());
         showExpectedTimeButton.addActionListener(e -> new ExpectedTimeVisionWindow());
         reportDistributionDelayButton.addActionListener(e -> new DistributionDelayWindow());
+        logoutButton.addActionListener(e -> {
+            JOptionPane.showMessageDialog(null, "Logout Button Pressed");
+            new LoginScreen();
+            frame.dispose();
+        });
 
 
 
