@@ -74,6 +74,18 @@ public class EmployeeService {
             return new Response(e.getMessage(), false);
         }
     }
+
+    public Response isDriver(String employeeId){
+        try{
+            if(employeeFacade.isDriver(employeeId))
+                return new Response("Employee is a driver", true);
+            else
+                return new Response("Employee is not a driver", false);
+        }
+        catch (Exception e){
+            return new Response(e.getMessage(), false);
+        }
+    }
 //    //adds an employee to the system
 //    public void addEmployee(String name, String id, String personalInfo, String bankName, String bankAccountNumber, Date startDate, String termsAndConditions, List<Role> roles, double salary) {
 //        employeeFacade.addEmployee(name, id, personalInfo, bankName, bankAccountNumber, startDate, termsAndConditions, roles, salary);

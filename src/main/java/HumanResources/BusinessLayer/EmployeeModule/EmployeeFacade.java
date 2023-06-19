@@ -177,6 +177,12 @@ public class EmployeeFacade {
         return salaryDAO.update(Integer.parseInt(id), salary.getDate(), bonus, salary.getSalary());
     }
 
+    public boolean isDriver(String employeeId){
+        if(!checkIfEmployeeExist(employeeId))
+            throw new IllegalArgumentException("Employee does not exist");
+        return employees.get(employeeId).getRoles().contains(Role.DRIVER);
+    }
+
 
     public void loadData() {
         EmployeeDAO employeeDAO = new EmployeeDAO();
