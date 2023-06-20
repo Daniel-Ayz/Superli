@@ -1,5 +1,6 @@
 package delivery.backend.businessLayer.shipment;
 
+import HumanResources.ServiceLayer.ServiceFactory;
 import delivery.backend.businessLayer.destination.*;
 import delivery.backend.businessLayer.TruckDriver.TruckDriverController;
 import delivery.backend.businessLayer.TruckDriver.TruckDriverPair;
@@ -174,6 +175,7 @@ public class ShipmentFactory {
         Map<ShipmentArea, Truck> trucksByArea = new HashMap<>();
         Map<ShipmentArea, Driver> driversByArea = new HashMap<>();
         // get a truck and a driver for each area
+
         for (ShipmentArea area : supplyOrderByArea.keySet()) {
             try {
                 TruckDriverPair pair = truckDriverController.getAvailableTruckDriverPair(convertToDateViaInstant(getClosestSunday()));
@@ -181,7 +183,7 @@ public class ShipmentFactory {
                 driversByArea.put(area, pair.getDriver());
             }
             catch(Exception ex) { concatToStockShortage(stockOrderByArea.get(area)); concatToSupplyShortage(supplyOrderByArea.get(area)); }
-        } //need to fix- what if no drivers are available?
+        }
 
         Map<ShipmentArea, Integer> shipmentIds = new HashMap<>();
 

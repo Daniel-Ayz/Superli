@@ -23,6 +23,7 @@ public class TruckDriverController {
 
     public TruckDriverPair getAvailableTruckDriverPair(Date date) {
         List<Truck> trucks = truckController.getAvailableTrucks();
+
         for(Truck truck : trucks) {
             List<HumanResources.BusinessLayer.EmployeeModule.Driver> drivers = getDriversFromResponse(ServiceFactory.getInstance().getShiftServiceManagement().getDrivers(truck.getLicenseType(), date, ShiftType.MORNING));
             if(!drivers.isEmpty()) {

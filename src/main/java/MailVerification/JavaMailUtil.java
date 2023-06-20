@@ -13,7 +13,7 @@ import javax.activation.DataHandler;
 
 public class JavaMailUtil {
     public static Response<String> sendMail(String recipient, String generatedPassword) {
-        System.out.println("Preparing to send email");
+//        System.out.println("Preparing to send email");
 
         // configure properties for mail
         Properties properties = new Properties();
