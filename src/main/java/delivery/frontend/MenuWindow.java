@@ -1,5 +1,6 @@
 package delivery.frontend;
 
+import HumanResources.CLI.LoginScreenWindow;
 import delivery.backend.serviceLayer.FactoryService;
 
 public class MenuWindow extends Window{
@@ -46,7 +47,7 @@ public class MenuWindow extends Window{
                 case ("13") -> new OrderVisionWindow(factoryService).open();
                 case ("14") -> new ShowExpectedTimeWindow(factoryService).open();
                 case ("15") -> new ReportDistributionDelayWindow(factoryService).open();
-                case ("0") -> {print("Thanks And Goodbye!"); close();}
+                case ("0") -> {new LoginScreenWindow().open(); close();}
                 default -> print("Illegal choice");
             }
 
