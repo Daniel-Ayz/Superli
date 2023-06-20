@@ -10,8 +10,13 @@ import HumanResources.ServiceLayer.ServiceFactory;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import FaceRecognition.FaceRecognition;
 import delivery.graphicFrontend.MenuWindow;
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
 
 public class LoginScreen {
     private JPanel mainPanel;
@@ -108,6 +113,21 @@ public class LoginScreen {
         buttonGroup.add(employeeRadioButton);
         buttonGroup.add(managerRadioButton);
         buttonGroup.add(logisticManagerRadioButton);
+
+        welcomeSound();
+    }
+
+    private void welcomeSound(){
+        try {
+            FileInputStream fileInputStream = new FileInputStream("welcome.mp3");
+            Player player = new Player(fileInputStream);
+            player.play();
+            player.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (JavaLayerException e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean isValidLogin(String username, char[] password, boolean isEmployee, boolean isManager, boolean isLogisticManager) {

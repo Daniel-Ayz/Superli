@@ -4,25 +4,24 @@ import HR_Delivery.LicenseType;
 import HumanResources.DataAcessLayer.EmployeeDAL.DriverDAO;
 import HumanResources.GUI.LoginScreen;
 
-import java.io.IOException;
+import java.io.*;
 
 import static FaceRecognition.DetectFaces.detectFaces;
+
+import java.io.File;
+
+import javafx.application.Platform;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
 
 
 public class Main {
     public static void main(String[] args) {
 
-//        new HRDeliveryMainMenu();
         new LoginScreen();
-//        LicenseType lt = new DriverDAO().getById(3286);
-//        if (lt == null)
-//            System.out.println("oh no");
-//        else
-//            System.out.println(lt);
-//        try {
-//            detectFaces();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+
     }
 }

@@ -23,7 +23,12 @@
 <!--            <artifactId>jep</artifactId>-->
 <!--            <version>3.9.0</version>-->
 <!--        </dependency>-->
-
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>15</version>
+            <type>pom</type>
+        </dependency>
         <dependency>
             <groupId>com.google.cloud</groupId>
             <artifactId>google-cloud-vision</artifactId>
