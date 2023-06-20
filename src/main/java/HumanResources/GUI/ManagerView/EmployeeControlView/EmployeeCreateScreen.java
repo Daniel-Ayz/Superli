@@ -5,11 +5,13 @@ import HumanResources.BusinessLayer.EmployeeModule.Role;
 import HumanResources.ServiceLayer.EmployeeService;
 import HumanResources.ServiceLayer.Response;
 import HumanResources.ServiceLayer.ServiceFactory;
+import MailVerification.JavaMailUtil;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class EmployeeCreateScreen extends JFrame{
     private JPanel mainPanel;
@@ -32,6 +34,12 @@ public class EmployeeCreateScreen extends JFrame{
     private JLabel startDateLabel;
     private JLabel rolesLabel;
     private JPanel rolesPane;
+    private JLabel emailLabel;
+    private JTextField emailTextField;
+    private JLabel emailPasswordLabel;
+    private JTextField emailPasswordTextField;
+    private JButton sendPasswordButton;
+    private String password = "";
 
     public EmployeeCreateScreen(){
         JFrame frame = new JFrame("Create Employee");
@@ -53,6 +61,8 @@ public class EmployeeCreateScreen extends JFrame{
             JCheckBox roleCheckBox = new JCheckBox(role.toString());
             rolesPane.add(roleCheckBox);
         }
+        emailPasswordTextField.setEditable(false);
+        sendPasswordButton.addActionListener(e -> sendPassword());
         // Add action listener for addEmployee button
         addEmployeeButton.addActionListener(e -> addEmployee());
     }
@@ -86,6 +96,18 @@ public class EmployeeCreateScreen extends JFrame{
             }
         }
 
+        //check if got mail
+        if(this.password.equals("")) {
+            JOptionPane.showMessageDialog(mainPanel, "Please send password to email");
+            return;
+        }
+
+        //check if password matches
+        if(!emailPasswordTextField.getText().equals(this.password)) {
+            JOptionPane.showMessageDialog(mainPanel, "Password does not match");
+            return;
+        }
+
         LicenseType licenseType = null;
         //check if driver is selected
         if(roles.contains(Role.DRIVER)) {
@@ -106,6 +128,27 @@ public class EmployeeCreateScreen extends JFrame{
         JOptionPane.showMessageDialog(mainPanel, response.getData().toString());
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
         frame.dispose();
+    }
+
+    private void sendPassword() {
+        //get email
+        String email = emailTextField.getText();
+
+        //check if email is valid
+        if(!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            JOptionPane.showMessageDialog(mainPanel, "Invalid email");
+            return;
+        }
+
+        //generate password
+        this.password = String.format("%06d", new Random().nextInt(999999));
+        Response<String> sendPasswordResponse = JavaMailUtil.sendMail(email, password);
+        if(!sendPasswordResponse.isSuccess()) {
+            JOptionPane.showMessageDialog(mainPanel, sendPasswordResponse.getData());
+            return;
+        }
+        JOptionPane.showMessageDialog(mainPanel, "Password sent to email");
+        emailPasswordTextField.setEditable(true);
     }
 
     public EmployeeService getEmployeeService() {
