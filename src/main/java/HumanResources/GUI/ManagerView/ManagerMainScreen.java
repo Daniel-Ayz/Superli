@@ -14,13 +14,13 @@ public class ManagerMainScreen extends JFrame {
     private JButton addBranchButton;
     private JButton addShiftButton;
 //    private JTable shiftsTable;
-    private JButton logoutButton;
+//    private JButton logoutButton;
     private JButton employeeControlMainScreenButtonButton;
 
     public ManagerMainScreen() {
         JFrame frame = new JFrame("Manager Main Screen");
         frame.setContentPane(mainPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
 
         int width = 600;
@@ -37,11 +37,11 @@ public class ManagerMainScreen extends JFrame {
 
 
 
-        logoutButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(null, "Logout Button Pressed");
-            CreateLoginScreen();
-            frame.dispose();
-        });
+//        logoutButton.addActionListener(e -> {
+//            JOptionPane.showMessageDialog(null, "Logout Button Pressed");
+//            CreateLoginScreen();
+//            frame.dispose();
+//        });
     }
 
     private void addBranch() {

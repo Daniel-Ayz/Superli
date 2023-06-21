@@ -9,6 +9,8 @@ import MailVerification.JavaMailUtil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -39,6 +41,7 @@ public class EmployeeCreateScreen extends JFrame{
     private JLabel emailPasswordLabel;
     private JTextField emailPasswordTextField;
     private JButton sendPasswordButton;
+    private JButton faceRecognitionImageButton;
     private String password = "";
 
     public EmployeeCreateScreen(){
@@ -65,6 +68,18 @@ public class EmployeeCreateScreen extends JFrame{
         sendPasswordButton.addActionListener(e -> sendPassword());
         // Add action listener for addEmployee button
         addEmployeeButton.addActionListener(e -> addEmployee());
+        faceRecognitionImageButton.addActionListener(e -> takePicture(idTextField.getText()));
+    }
+
+    private void takePicture(String id){
+        File file = new File(System.getProperty("user.dir") + "\\AttendanceProject\\");
+
+        try {
+            Process p = Runtime.getRuntime().exec("python " + "TakePicture.py"+" "+id,
+                    null, file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void addEmployee() {
