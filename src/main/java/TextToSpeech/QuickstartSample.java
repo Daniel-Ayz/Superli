@@ -19,7 +19,7 @@ import java.io.OutputStream;
 public class QuickstartSample {
 
     /** Demonstrates using the Text-to-Speech API. */
-    public static boolean genereateText(String textToSpeech){
+    public static boolean genereateSpeech(String textToSpeech, String filename){
         // Instantiates a client
         try (TextToSpeechClient textToSpeechClient = TextToSpeechClient.create()) {
             // Set the text input to be synthesized
@@ -46,7 +46,7 @@ public class QuickstartSample {
             ByteString audioContents = response.getAudioContent();
 
             // Write the response to the output file.
-            try (OutputStream out = new FileOutputStream("output.mp3")) {
+            try (OutputStream out = new FileOutputStream(filename+".mp3")) {
                 out.write(audioContents.toByteArray());
 //                System.out.println("Audio content written to file \"output.mp3\"");
                 return true;

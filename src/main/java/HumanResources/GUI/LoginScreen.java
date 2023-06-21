@@ -23,6 +23,8 @@ import delivery.graphicFrontend.MenuWindow;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
+import static TextToSpeech.QuickstartSample.genereateSpeech;
+
 public class LoginScreen {
     private JPanel mainPanel;
     private JTextField usernameTextField;
@@ -152,7 +154,7 @@ public class LoginScreen {
                 String emotion = "sadness";
                 if (emotionLikelihood == null) {
                     System.out.println("No emotion detected");
-                } else if (emotionLikelihood.getNumber() >= 4) {
+                } else if (emotionLikelihood.getNumber() >= 3) {
                     emotion = "joy";
                 }
 
@@ -161,6 +163,8 @@ public class LoginScreen {
                 if (!poemRes.isSuccess()) {
                     JOptionPane.showMessageDialog(null, "Poem generation failed.");
                 } else {
+                    genereateSpeech(poemRes.getData().toString(), "poem");
+                    poemSound();
                     JOptionPane.showMessageDialog(null, poemRes.getData());
                 }
             } catch (Exception exception) {
@@ -172,6 +176,23 @@ public class LoginScreen {
     public static void CreateLoginScreen() {
         new LoginScreen();
         welcomeSound();
+    }
+
+    private static void poemSound(){
+        new Thread(() -> { // Lambda Expression
+            try {
+                FileInputStream fileInputStream = new FileInputStream("poem.mp3");
+                Player player = new Player(fileInputStream);
+                player.play();
+                player.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (JavaLayerException e) {
+                e.printStackTrace();
+            }  catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     private static void welcomeSound(){

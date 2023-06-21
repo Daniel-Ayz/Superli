@@ -32,7 +32,7 @@ public class PoemGenerator {
 
     private static String generatePoem(String prompt) throws IOException {
 //        System.out.println("Generating poem for prompt: " + prompt);
-        String apiKey = "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"; // Replace with your actual ChatGPT API key
+        String apiKey = "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";
         String apiUrl = "https://api.openai.com/v1/engines/text-davinci-001/completions";
 
         URL url = new URL(apiUrl);
@@ -53,7 +53,7 @@ public class PoemGenerator {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    System.out.println(line);
+//                    System.out.println(line);
                     response.append(line);
                 }
             }
