@@ -1,11 +1,5 @@
 package FaceRecognition;
-import com.google.cloud.vision.v1.AnnotateImageRequest;
-import com.google.cloud.vision.v1.AnnotateImageResponse;
-import com.google.cloud.vision.v1.BatchAnnotateImagesResponse;
-import com.google.cloud.vision.v1.FaceAnnotation;
-import com.google.cloud.vision.v1.Feature;
-import com.google.cloud.vision.v1.Image;
-import com.google.cloud.vision.v1.ImageAnnotatorClient;
+import com.google.cloud.vision.v1.*;
 import com.google.protobuf.ByteString;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -21,9 +15,9 @@ public class DetectFaces {
     }
 
     // Detects faces in the specified local image.
-    public static void detectFaces(String filePath) throws IOException {
+    public static Likelihood detectFaces(String filePath) throws IOException {
         List<AnnotateImageRequest> requests = new ArrayList();
-
+        Likelihood likelihood = null;
         ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
 
         Image img = Image.newBuilder().setContent(imgBytes).build();
@@ -42,19 +36,23 @@ public class DetectFaces {
             for (AnnotateImageResponse res : responses) {
                 if (res.hasError()) {
                     System.out.format("Error: %s%n", res.getError().getMessage());
-                    return;
+                    throw new IOException("Error in detect faces: " + res.getError().getMessage());
                 }
 
                 // For full list of available annotations, see http://g.co/cloud/vision/docs
                 for (FaceAnnotation annotation : res.getFaceAnnotationsList()) {
-                    System.out.format(
-                            "anger: %s%njoy: %s%nsurprise: %s%nposition: %s",
-                            annotation.getAngerLikelihood(),
-                            annotation.getJoyLikelihood(),
-                            annotation.getSurpriseLikelihood(),
-                            annotation.getBoundingPoly());
+                    likelihood = annotation.getJoyLikelihood();
+//                    likelihoods = new Likelihood[]{annotation.getAngerLikelihood(), annotation.getJoyLikelihood(), annotation.getSurpriseLikelihood()};
+
+//                    System.out.format(
+//                            "anger: %s%njoy: %s%nsurprise: %s%n",
+//                            annotation.getAngerLikelihood(),
+//                            annotation.getJoyLikelihood(),
+//                            annotation.getSorrowLikelihood());
+//                            annotation.getBoundingPoly());
+                }
                 }
             }
+            return likelihood;
         }
     }
-}
