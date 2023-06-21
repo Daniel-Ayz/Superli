@@ -24,6 +24,6 @@ public class Main {
     public static void main(String[] args) {
 
         CreateLoginScreen();
-//        QuickstartSample.genereateText("Hi Roy Shvartz welcome back to the system");
+
     }
 }

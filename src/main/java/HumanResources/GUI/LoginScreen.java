@@ -166,6 +166,9 @@ public class LoginScreen {
                     genereateSpeech(poemRes.getData().toString(), "poem");
                     poemSound();
                     JOptionPane.showMessageDialog(null, poemRes.getData());
+                    if(emotion.equals("sadness")){
+                        new GameWindow();
+                    }
                 }
             } catch (Exception exception) {
                 exception.printStackTrace();
