@@ -7,6 +7,8 @@ import HumanResources.GUI.ManagerView.ShiftView.ShiftMainScreen;
 
 import javax.swing.*;
 
+import static HumanResources.GUI.LoginScreen.CreateLoginScreen;
+
 public class ManagerMainScreen extends JFrame {
     private JPanel mainPanel;
     private JButton addBranchButton;
@@ -37,7 +39,7 @@ public class ManagerMainScreen extends JFrame {
 
         logoutButton.addActionListener(e -> {
             JOptionPane.showMessageDialog(null, "Logout Button Pressed");
-            new LoginScreen();
+            CreateLoginScreen();
             frame.dispose();
         });
     }

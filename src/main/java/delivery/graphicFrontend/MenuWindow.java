@@ -4,6 +4,8 @@ import HumanResources.GUI.LoginScreen;
 
 import javax.swing.*;
 
+import static HumanResources.GUI.LoginScreen.CreateLoginScreen;
+
 public class MenuWindow {
     private JPanel mainPanel;
 
@@ -55,7 +57,7 @@ public class MenuWindow {
         reportDistributionDelayButton.addActionListener(e -> new DistributionDelayWindow());
         logoutButton.addActionListener(e -> {
             JOptionPane.showMessageDialog(null, "Logout Button Pressed");
-            new LoginScreen();
+            CreateLoginScreen();
             frame.dispose();
         });
 

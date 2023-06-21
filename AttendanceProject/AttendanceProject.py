@@ -59,7 +59,7 @@ while True:
     encodesCurFrame = face_recognition.face_encodings(imgS, facesCurFrame)
     # find matches
     for encodeFace, faceLoc in zip(encodesCurFrame, facesCurFrame):
-        matches = face_recognition.compare_faces(encodeListKnown, encodeFace, tolerance=0.4)
+        matches = face_recognition.compare_faces(encodeListKnown, encodeFace, tolerance=0.5)
         faceDis = face_recognition.face_distance(encodeListKnown, encodeFace)
 #         print(faceDis)
         matchIndex = np.argmin(faceDis)

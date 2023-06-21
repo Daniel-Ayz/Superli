@@ -7,6 +7,8 @@ import delivery.backend.serviceLayer.FactoryService;
 
 import javax.swing.*;
 
+import static HumanResources.GUI.LoginScreen.CreateLoginScreen;
+
 public class HRDeliveryMainMenu {
     private JButton humanResourcesMenuButton;
     private JPanel mainPanel;
@@ -34,7 +36,7 @@ public class HRDeliveryMainMenu {
         initializeWithBaseDataButton.addActionListener(e -> InitializeWithData());
         logoutButton.addActionListener(e -> {
             JOptionPane.showMessageDialog(null, "Logout Button Pressed");
-            new LoginScreen();
+            CreateLoginScreen();
             frame.dispose();
         });
     }

@@ -29,7 +29,7 @@ public class LoginScreen {
     private JRadioButton logisticManagerRadioButton;
     private ButtonGroup buttonGroup;
 
-    public LoginScreen() {
+    private LoginScreen() {
         JFrame frame = new JFrame("Login");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(mainPanel);
@@ -114,20 +114,29 @@ public class LoginScreen {
         buttonGroup.add(managerRadioButton);
         buttonGroup.add(logisticManagerRadioButton);
 
+    }
+
+    public static void CreateLoginScreen() {
+        new LoginScreen();
         welcomeSound();
     }
 
-    private void welcomeSound(){
-        try {
-            FileInputStream fileInputStream = new FileInputStream("welcome.mp3");
-            Player player = new Player(fileInputStream);
-            player.play();
-            player.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (JavaLayerException e) {
-            e.printStackTrace();
-        }
+    private static void welcomeSound(){
+        new Thread(() -> { // Lambda Expression
+            try {
+                FileInputStream fileInputStream = new FileInputStream("welcome.mp3");
+                Player player = new Player(fileInputStream);
+                player.play();
+                player.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (JavaLayerException e) {
+                e.printStackTrace();
+            }  catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+
     }
 
     private boolean isValidLogin(String username, char[] password, boolean isEmployee, boolean isManager, boolean isLogisticManager) {

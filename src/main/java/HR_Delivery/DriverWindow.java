@@ -6,6 +6,8 @@ import delivery.graphicFrontend.DriverMenuWindow;
 
 import javax.swing.*;
 
+import static HumanResources.GUI.LoginScreen.CreateLoginScreen;
+
 public class DriverWindow {
     private JButton shiftsManagmentButton;
     private JPanel mainPanel;
@@ -30,7 +32,7 @@ public class DriverWindow {
         deliveryMenuButton.addActionListener(e -> new DriverMenuWindow());
         logoutButton.addActionListener(e -> {
             JOptionPane.showMessageDialog(null, "Logout Button Pressed");
-            new LoginScreen();
+            CreateLoginScreen();
             frame.dispose();
         });
     }

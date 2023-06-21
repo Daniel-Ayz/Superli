@@ -7,6 +7,8 @@ import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static HumanResources.GUI.LoginScreen.CreateLoginScreen;
+
 public class EmployeeMainScreen {
     private JPanel mainPanel;
     private JLabel welcomeLabel;
@@ -40,7 +42,7 @@ public class EmployeeMainScreen {
 
         logoutButton.addActionListener(e -> {
             JOptionPane.showMessageDialog(null, "Logout Button Pressed");
-            new LoginScreen();
+            CreateLoginScreen();
             frame.dispose();
         });
     }

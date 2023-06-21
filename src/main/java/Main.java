@@ -7,6 +7,7 @@ import HumanResources.GUI.LoginScreen;
 import java.io.*;
 
 import static FaceRecognition.DetectFaces.detectFaces;
+import static HumanResources.GUI.LoginScreen.CreateLoginScreen;
 
 import java.io.File;
 
@@ -21,7 +22,7 @@ import javazoom.jl.player.Player;
 public class Main {
     public static void main(String[] args) {
 
-        new LoginScreen();
+        CreateLoginScreen();
 
     }
 }
