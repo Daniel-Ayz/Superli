@@ -8,11 +8,15 @@ import HumanResources.GUI.ManagerView.ManagerMainScreen;
 import HumanResources.ServiceLayer.Response;
 import HumanResources.ServiceLayer.ServiceFactory;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import FaceRecognition.FaceRecognition;
@@ -41,10 +45,16 @@ public class LoginScreen {
         frame.setContentPane(mainPanel);
         frame.pack();
 
-        ImageLabel.setIcon(new ImageIcon("logo_final.jpg"));
+        try {
+            String path = System.getProperty("user.dir")+"\\Logo_Picture\\logo-final.jpg";
+            BufferedImage img = ImageIO.read(new File(path));
+            ImageLabel.setIcon(new ImageIcon(img));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
-        int width = 300;
-        int height = 200;
+        int width = 800;
+        int height = 600;
         frame.setSize(width, height);
 
         frame.setLocationRelativeTo(null); // Center the frame
