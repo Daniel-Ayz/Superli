@@ -12,8 +12,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import FaceRecognition.FaceRecognition;
+import FaceRecognition.DetectFaces;
+import PoemGenerator.PoemGenerator;
+import com.google.cloud.vision.v1.Likelihood;
 import delivery.graphicFrontend.MenuWindow;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
@@ -84,25 +88,57 @@ public class LoginScreen {
         faceRecognitionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String name = FaceRecognition.recognizeFaces();
-                if (name.equals("ERROR")) {
+                String idRec = FaceRecognition.recognizeFaces();
+                if (idRec.equals("ERROR")) {
                     JOptionPane.showMessageDialog(null, "Face not recognized.");
                 } else {
+                    String role;
 //                    boolean isEmployee = employeeRadioButton.isSelected();
-                    usernameTextField.setText(name);
-                    if (name.equals("ADMIN")) {
-                        new HRDeliveryMainMenu();
+                    usernameTextField.setText(idRec);
+                    if (idRec.equals("ADMIN")) {
+                        role = "ADMIN";
                     }
-                    else if(name.equals("LOGISTIC")){
-                        new MenuWindow();
+                    else if(idRec.equals("LOGISTIC")){
+                        role = "LOGISTIC";
                     }
                     else {
-                        Response res = ServiceFactory.getInstance().getEmployeeService().isDriver(name);
-                        if(res.isSuccess())
-                            new DriverWindow(name);
-                        else
-                            new EmployeeMainScreen(name);
+                        Response res = ServiceFactory.getInstance().getEmployeeService().isDriver(idRec);
+                        if(res.isSuccess()) {
+                            role = "DRIVER";
+                        }
+                        else {
+                            role = "EMPLOYEE";
+                        }
                     }
+
+                    try {
+                        Likelihood[] emotions = DetectFaces.detectFaces("AttendanceProject/images/c1.png").get(0).get(0);
+                        int maxEmotionLevel = Math.max(emotions[0].getNumber(), Math.max(emotions[1].getNumber(), emotions[2].getNumber()));
+                        String emotion = "anger";
+                        if (maxEmotionLevel == emotions[1].getNumber()) {
+                            emotion = "joy";
+                        } else if (maxEmotionLevel == emotions[2].getNumber()) {
+                            emotion = "surprised";
+                        }
+
+                        Response poemRes = PoemGenerator.getPoem(emotion, idRec, role);
+                        if (!poemRes.isSuccess()) {
+                            JOptionPane.showMessageDialog(null, "Poem generation failed.");
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(null, poemRes.getData());
+                        }
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+
+                    switch (role) {
+                        case "ADMIN" -> new HRDeliveryMainMenu();
+                        case "LOGISTIC" -> new MenuWindow();
+                        case "DRIVER" -> new DriverWindow(idRec);
+                        case "EMPLOYEE" -> new EmployeeMainScreen(idRec);
+                    }
+
                     frame.dispose(); // Close the login window
                 }
             }

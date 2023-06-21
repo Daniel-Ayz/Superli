@@ -1,11 +1,5 @@
 package FaceRecognition;
-import com.google.cloud.vision.v1.AnnotateImageRequest;
-import com.google.cloud.vision.v1.AnnotateImageResponse;
-import com.google.cloud.vision.v1.BatchAnnotateImagesResponse;
-import com.google.cloud.vision.v1.FaceAnnotation;
-import com.google.cloud.vision.v1.Feature;
-import com.google.cloud.vision.v1.Image;
-import com.google.cloud.vision.v1.ImageAnnotatorClient;
+import com.google.cloud.vision.v1.*;
 import com.google.protobuf.ByteString;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -21,7 +15,7 @@ public class DetectFaces {
     }
 
     // Detects faces in the specified local image.
-    public static void detectFaces(String filePath) throws IOException {
+    public static List<List<Likelihood[]>> detectFaces(String filePath) throws IOException {
         List<AnnotateImageRequest> requests = new ArrayList();
 
         ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
@@ -32,6 +26,7 @@ public class DetectFaces {
                 AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
         requests.add(request);
 
+        List<List<Likelihood[]>> clientsLikelihoods = new ArrayList<>();
         // Initialize client that will be used to send requests. This client only needs to be created
         // once, and can be reused for multiple requests. After completing all of your requests, call
         // the "close" method on the client to safely clean up any remaining background resources.
@@ -40,13 +35,15 @@ public class DetectFaces {
             List<AnnotateImageResponse> responses = response.getResponsesList();
 
             for (AnnotateImageResponse res : responses) {
+                List<Likelihood[]>  likelihoods = new ArrayList<>();
                 if (res.hasError()) {
                     System.out.format("Error: %s%n", res.getError().getMessage());
-                    return;
+                    throw new IOException("Error in detect faces: " + res.getError().getMessage());
                 }
 
                 // For full list of available annotations, see http://g.co/cloud/vision/docs
                 for (FaceAnnotation annotation : res.getFaceAnnotationsList()) {
+                    likelihoods.add(new Likelihood[]{annotation.getAngerLikelihood(), annotation.getJoyLikelihood(), annotation.getSurpriseLikelihood()});
                     System.out.format(
                             "anger: %s%njoy: %s%nsurprise: %s%nposition: %s",
                             annotation.getAngerLikelihood(),
@@ -56,5 +53,6 @@ public class DetectFaces {
                 }
             }
         }
+        return clientsLikelihoods;
     }
 }
