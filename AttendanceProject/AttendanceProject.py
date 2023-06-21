@@ -1,21 +1,67 @@
 import datetime
 import os
 import time
-
+import re
 import cv2
 import numpy as np
 import face_recognition
 
 
-path = 'ImagesAttendance'
-images = []
-classNames = []
-myList = os.listdir(path)
-for cl in myList:
-    curImg = cv2.imread(f"{path}/{cl}")
-    images.append(curImg)
-    classNames.append(os.path.splitext(cl)[0])
+# path = 'ImagesAttendance'
+# images = []
+# classNames = []
+# myList = os.listdir(path)
+# for cl in myList:
+#     curImg = cv2.imread(f"{path}/{cl}")
+#     images.append(curImg)
+#     classNames.append(os.path.splitext(cl)[0])
 # print(classNames)
+
+
+def ImageFilesInFolder(folder):
+    #following code snippet from face_recognition
+    return [os.path.join(folder, f) for f in os.listdir(folder) if re.match(r'.*\.(jpg|jpeg|png)', f, flags=re.I)]
+
+
+
+def ScanKnownPeople(known_people_folder):
+    names = []
+    face_encodings = []
+
+    for file in ImageFilesInFolder(known_people_folder):
+        filename = os.path.splitext(os.path.basename(file))[0]
+        # print("DEBUG: Attempted to load image file from", file)
+        image = face_recognition.load_image_file(file)
+
+        if os.path.isfile(os.path.join(known_people_folder, "PreEncoded", filename) + ".npy"):
+            # read from file, for performance reasons. useful for large batches of files
+            encodedfile = np.load((os.path.join(known_people_folder, "PreEncoded", filename) + ".npy"))
+
+            if encodedfile is not None:
+                names.append(filename)
+                # print("DEBUG: appended from document", filename)
+                face_encodings.append(encodedfile)
+                # print("DEBUG: appended from document", encodedfile)
+        else:
+            single_encoding = face_recognition.face_encodings(image)
+
+            # if len(single_encoding) > 1:
+                # print("WARNING: More than one face found in", file + ".", "Only using the first face.")
+
+            # if len(single_encoding) == 0:
+                # print("WARNING: No faces found in", file + ".", "Ignoring file.")
+            # else:
+            names.append(filename)
+            face_encodings.append(single_encoding[0])
+
+            # write to file, for performance reasons, so as to not calculate all the faces each time
+            encodedfile = np.save((os.path.join(known_people_folder, "PreEncoded", filename) + ".npy"),
+                                     single_encoding[0])
+            # print("DEBUG: saved to document", filename)
+            # print("DEBUG: saved to document", encodedfile)
+
+    return names, face_encodings
+
 
 def findEncodings(images):
     encodeList = []
@@ -24,6 +70,7 @@ def findEncodings(images):
         encode = face_recognition.face_encodings(img)[0]
         encodeList.append(encode)
     return encodeList
+
 
 def markAttendance(name):
     # time
@@ -43,8 +90,10 @@ def markAttendance(name):
             f.writelines('\n')
             f.writelines(f'{name},{timeString},{dateString}')
 
-encodeListKnown = findEncodings(images)
+
+# encodeListKnown = findEncodings(images)
 # print('Encoding Complete')
+names, encodeListKnown = ScanKnownPeople("ImagesAttendance")
 
 cap = cv2.VideoCapture(0)
 terminate = False
@@ -64,7 +113,7 @@ while True:
 #         print(faceDis)
         matchIndex = np.argmin(faceDis)
         if matches[matchIndex]:
-            name = classNames[matchIndex].upper()
+            name = names[matchIndex].upper()
             print(name)
             cv2.imwrite('images/c1.png',img)
             y1, x2, y2, x1 = faceLoc

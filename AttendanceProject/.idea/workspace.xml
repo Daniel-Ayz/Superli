@@ -5,14 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b5014dbb-ef8f-465a-b598-ae82d9e00795" name="Changes" comment="Uploading screenshots">
-      <change afterPath="$PROJECT_DIR$/TakePicture.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AttendanceFile.csv" beforeDir="false" afterPath="$PROJECT_DIR$/AttendanceFile.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AttendanceProject.py" beforeDir="false" afterPath="$PROJECT_DIR$/AttendanceProject.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ImagesAttendance/3229.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/images/c1.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/c1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../delivery_database.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/../delivery_database.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../hr_database.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/../hr_database.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../poem.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/../poem.mp3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/HumanResources/GUI/ManagerView/ManagerMainScreen.form" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/HumanResources/GUI/ManagerView/ManagerMainScreen.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/HumanResources/GUI/ManagerView/ManagerMainScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/HumanResources/GUI/ManagerView/ManagerMainScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/HumanResources/GUI/LoginScreen.form" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/HumanResources/GUI/LoginScreen.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/java/PoemGenerator/PoemGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/PoemGenerator/PoemGenerator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -117,7 +118,8 @@
       <workItem from="1687103419373" duration="1464000" />
       <workItem from="1687122579539" duration="157000" />
       <workItem from="1687124051230" duration="3629000" />
-      <workItem from="1687369313360" duration="848000" />
+      <workItem from="1687369313360" duration="4310000" />
+      <workItem from="1687389831857" duration="378000" />
     </task>
     <task id="LOCAL‎-00001" summary="Uploading screenshots">
       <created>1680899605676</created>

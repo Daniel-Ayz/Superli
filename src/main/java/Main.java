@@ -22,8 +22,6 @@ import javazoom.jl.player.Player;
 
 public class Main {
     public static void main(String[] args) {
-
         CreateLoginScreen();
-
     }
 }
