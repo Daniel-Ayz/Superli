@@ -32,6 +32,7 @@ public class LoginScreen {
     private JRadioButton managerRadioButton;
     private JButton faceRecognitionButton;
     private JRadioButton logisticManagerRadioButton;
+    private JLabel ImageLabel;
     private ButtonGroup buttonGroup;
 
     private LoginScreen() {
@@ -39,6 +40,8 @@ public class LoginScreen {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(mainPanel);
         frame.pack();
+
+        ImageLabel.setIcon(new ImageIcon("logo_final.jpg"));
 
         int width = 300;
         int height = 200;
