@@ -11,6 +11,7 @@ import static HumanResources.GUI.LoginScreen.CreateLoginScreen;
 
 import java.io.File;
 
+import TextToSpeech.QuickstartSample;
 import javafx.application.Platform;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -23,6 +24,6 @@ public class Main {
     public static void main(String[] args) {
 
         CreateLoginScreen();
-
+//        QuickstartSample.genereateText("Hi Roy Shvartz welcome back to the system");
     }
 }
