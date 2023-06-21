@@ -37,6 +37,7 @@ public class LoginScreen {
     private JButton faceRecognitionButton;
     private JRadioButton logisticManagerRadioButton;
     private JLabel ImageLabel;
+    private JLabel welcomeTextLabel;
     private ButtonGroup buttonGroup;
 
     private LoginScreen() {
@@ -44,6 +45,10 @@ public class LoginScreen {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(mainPanel);
         frame.pack();
+
+        welcomeTextLabel.setText("Welcome to Super-Ly, super for you and me!");
+        welcomeTextLabel.setFont(welcomeTextLabel.getFont().deriveFont(20.0f));
+        welcomeTextLabel.setSize(100, 100);
 
         try {
             String path = System.getProperty("user.dir")+"\\Logo_Picture\\logo-final.jpg";
