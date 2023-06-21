@@ -2,6 +2,7 @@ package HumanResources.GUI;
 
 import HR_Delivery.DriverWindow;
 import HR_Delivery.HRDeliveryMainMenu;
+import HumanResources.BusinessLayer.EmployeeModule.Employee;
 import HumanResources.GUI.EmployeeView.EmployeeMainScreen;
 import HumanResources.GUI.ManagerView.ManagerMainScreen;
 import HumanResources.ServiceLayer.Response;
@@ -96,47 +97,38 @@ public class LoginScreen {
 //                    boolean isEmployee = employeeRadioButton.isSelected();
                     usernameTextField.setText(idRec);
                     if (idRec.equals("ADMIN")) {
-                        role = "ADMIN";
+                        role = "HR manager";
                     }
                     else if(idRec.equals("LOGISTIC")){
-                        role = "LOGISTIC";
+                        role = "logistic manager";
                     }
                     else {
                         Response res = ServiceFactory.getInstance().getEmployeeService().isDriver(idRec);
                         if(res.isSuccess()) {
-                            role = "DRIVER";
+                            role = "driver";
                         }
                         else {
-                            role = "EMPLOYEE";
+                            role = "employee";
                         }
                     }
-
-                    try {
-                        Likelihood[] emotions = DetectFaces.detectFaces("AttendanceProject/images/c1.png").get(0).get(0);
-                        int maxEmotionLevel = Math.max(emotions[0].getNumber(), Math.max(emotions[1].getNumber(), emotions[2].getNumber()));
-                        String emotion = "anger";
-                        if (maxEmotionLevel == emotions[1].getNumber()) {
-                            emotion = "joy";
-                        } else if (maxEmotionLevel == emotions[2].getNumber()) {
-                            emotion = "surprised";
+                    String nameOfEmployee = "employee";
+                    if(role.equals("employee") || role.equals("driver")){
+                        Response res = ServiceFactory.getInstance().getEmployeeService().getEmployee(idRec);
+                        if (res.isSuccess()){
+                            Employee employee = (Employee) res.getData();
+                            nameOfEmployee = employee.getName();
                         }
-
-                        Response poemRes = PoemGenerator.getPoem(emotion, idRec, role);
-                        if (!poemRes.isSuccess()) {
-                            JOptionPane.showMessageDialog(null, "Poem generation failed.");
-                        }
-                        else {
-                            JOptionPane.showMessageDialog(null, poemRes.getData());
-                        }
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
                     }
+                    else{
+                        nameOfEmployee = "manager";
+                    }
+                    generatePoem(nameOfEmployee, role);
 
                     switch (role) {
-                        case "ADMIN" -> new HRDeliveryMainMenu();
-                        case "LOGISTIC" -> new MenuWindow();
-                        case "DRIVER" -> new DriverWindow(idRec);
-                        case "EMPLOYEE" -> new EmployeeMainScreen(idRec);
+                        case "HR manager" -> new HRDeliveryMainMenu();
+                        case "logistic manager" -> new MenuWindow();
+                        case "driver" -> new DriverWindow(idRec);
+                        case "employee" -> new EmployeeMainScreen(idRec);
                     }
 
                     frame.dispose(); // Close the login window
@@ -150,6 +142,31 @@ public class LoginScreen {
         buttonGroup.add(managerRadioButton);
         buttonGroup.add(logisticManagerRadioButton);
 
+    }
+
+    private static void generatePoem(String idRec, String role) {
+        new Thread(() -> {
+            try {
+                Likelihood emotionLikelihood = DetectFaces.detectFaces("AttendanceProject/images/c1.png");
+
+                String emotion = "sadness";
+                if (emotionLikelihood == null) {
+                    System.out.println("No emotion detected");
+                } else if (emotionLikelihood.getNumber() >= 4) {
+                    emotion = "joy";
+                }
+
+                Response poemRes = PoemGenerator.getPoem(emotion, idRec, role);
+
+                if (!poemRes.isSuccess()) {
+                    JOptionPane.showMessageDialog(null, "Poem generation failed.");
+                } else {
+                    JOptionPane.showMessageDialog(null, poemRes.getData());
+                }
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }).start();
     }
 
     public static void CreateLoginScreen() {
