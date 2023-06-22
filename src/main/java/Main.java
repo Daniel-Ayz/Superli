@@ -23,13 +23,12 @@ import javazoom.jl.player.Player;
 
 public class Main {
     public static void main(String[] args) {
-        /*if (args.length == 0 || args[0].equals("GUI")) {
+        if (args.length == 0 || args[0].equals("GUI")) {
             CreateLoginScreen();
         }
         if(args[0].equals("CLI")) {
             new LoginScreenWindow();
-        }*/
-        new LoginScreenWindow().open();
+        }
 
     }
 }

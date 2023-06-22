@@ -235,9 +235,6 @@ public class LoginScreen {
     }
 
     private boolean isValidLogin(String username, char[] password, boolean isEmployee, boolean isManager, boolean isLogisticManager) {
-        //TODO: REMOVE THIS, ONLY FOR TESTING
-        if(true)
-            return true;
         // For now, Manager has username "admin" and password "admin"
         if(isManager){
             return username.equals("admin") && new String(password).equals("admin");
