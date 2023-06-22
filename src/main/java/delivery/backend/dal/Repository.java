@@ -276,6 +276,5 @@ public class Repository {
         this.truckDAO.createTable();
         this.shipmentStockLeftoversDAO.createTable();
         this.shipmentSupplyLeftoversDAO.createTable();
-        System.out.println("Tables created");
     }
 }
