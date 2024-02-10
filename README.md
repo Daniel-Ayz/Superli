@@ -5,5 +5,5 @@ We included some cool API's: <br>
 - Chat-GPT
 - Password Verification (by mail)
 - google API's:
- - recognizing if someone is happy or sad by a photo of his face
- - text to sound
+  - recognizing if someone is happy or sad by a photo of his face
+  - text to sound
